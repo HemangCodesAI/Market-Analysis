@@ -60,3 +60,6 @@ def submit():
         return "Please enter a valid zip code!", 400
 
 
+
+if __name__ == '__main__':
+    app.run(debug=True)
