@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "market-annlysis-419314",
+  "private_key_id": "f32225451b12327fe0ab4de04cdd53bd2ecddb30",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDHp379x7JT4/1N\nWO0/NdL8YPmWJNoKI3S+OBja4E6f5K/Us1XgZO42G9PQ5zTHyWugC9/wUQ1HQ2nO\nd2Ymqhu68rP0t1Rxw4CBzNfVd8Px1rdU6VwMcEPvbavMkRFBEWGQdp3N7SkZCeDq\nM0oUkQc9QceKafhK61sDYjtUwjzkGuV96yFHl2BHm30uIzPFtXzET45MV8NvA6yB\nBmg3DLJJHeLxjfMf8rpMCH3HqUGNLED5W991ykdJ7ByKlfQCKNiNSmV3byCeVbHG\nB/YNIhAurjo22bUq6qHr1ckpZ+sVsnw4SFBh81xubiOOuNSp1Q/Ez4OU+obCfBO6\nJCYak3lbAgMBAAECggEABGnMFtQD5HLVCzv8p+RgBjrRNDka+2pj5D3dNB633jTx\n5g5oxuMJmPdDLApQUlzox3WRElYtqEuchSHX3OGZvKeCGYC2mc/WgV1ZJVuBC1F8\nZUtwlh3NLU0L+nj3xqvEWlXPkIO+NX17E/I6SvtsYOBEBufnbdCHXIB0C0rtNFA8\ni5zXar1PL1kjJApd3YlKYTJkmSZOtiYRt5AHIOCihjb9fdL6TZt7nBycJZ3zNwJ0\nYEvhGZeujvIvONI6aGNphHQMWRbAi3wE11+gutoz7emrjL6DUXBHOYtZvEy5PNC1\npuTEqA3/Ah6HmSTTwHKvfSIUoT0JscanuH3Yp5V+MQKBgQDvR3m9Yroq8bdP/adq\nvbjAlxPtMRoK/goWd5ixW7r8v/7HfUx5kQddkrrXvTXF8Ymrqrn0JWUofBwzrG+G\n494GN0monIKS3Wh78dmKgJIMpFe9AdKUmP6f9h+Ndb3RrekFto+jr5gyvvp9oA9k\nbvSiwZk0c9/sNsFZ9L7wdttHlwKBgQDVmykb3l/BLU7TVAf+xPwpLqC+/je8mhH/\nEfS4Om7p7bLkaTdwRAfGWk9eudou+uIw6yf5qY5x3dIeSxptmTMKb+FCQAu4W90/\nmLjyHtW8mUCr53+EeyNg8hNuEXo7iKpHVdJvwvhAKqTxRS06DEPAGawK648wI0nV\n17t6qKQ03QKBgQC2a9uYUyhzjQygY1W7vyCXU5bRglnEf6DZOBylOrX387geBpzD\nIZpn8HGaAJp6aob25ZYXWFsi3lvx2Ui9ogOm4Ye6kHfL2BjMRboAKb0u/iwV4MnW\nmD2nXlD33Af3T4sT2/buZ/S023zFQb36Z80COG7A2oag463NExZu5W6PyQKBgQCU\nlf4emK1bHz0527ZEDpqpuvmuYgA7faEPIVpt3JfSubo7EMWznl8aJzAW4IlZLMOy\n66E/Fic0Je1HjU6w9mR+2hyDjTGZ6K0a1A2yvqhHLQPDkKEvcsjFYx8I7bdtOj/Y\np2Zev+0YFZHvEwPG4Ukvk6wNXJaaEbIGwq5zQGQZMQKBgC5pAYGEfE9HX15vsY69\nA4B/E+E8HDcvfWepCMwTUVWSXezdZlfOQuA/8yb3J7AQ2iUJU026oh1DYjk1hC/I\nfDgm+cGsdT8ofMT9cklpRh7NvDvw2u3ps7Msumks0Kh9n007O3wStu7a9JC3qSI1\ntA+nmo3GpppfmU1EnANl6WuH\n-----END PRIVATE KEY-----\n",
+  "client_email": "userdatacapture@market-annlysis-419314.iam.gserviceaccount.com",
+  "client_id": "115474929325857393408",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/userdatacapture%40market-annlysis-419314.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
