@@ -1,8 +1,5 @@
 from flask import Flask, render_template, request, make_response
-try:
-    from ai import get_data , get_zip_data
-except:
-    from fast_scraper import get_data, get_zip_data
+from fast_scraper import get_data, get_zip_data
 import pandas as pd
 from googleapiclient.discovery import build
 from google.oauth2 import service_account
@@ -61,5 +58,3 @@ def submit():
 
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
