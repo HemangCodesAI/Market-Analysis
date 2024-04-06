@@ -1,0 +1,4 @@
+flask
+pandas
+bs4
+uszipcode
