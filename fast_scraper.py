@@ -114,10 +114,9 @@ def get_old(KPIdf,info,zipcode):
     get_economy(info,zipcode,KPIdf)
     return KPIdf
 
-def get_data(zipcode):
+info = get_zip_data(zipcode)
+def get_data(zipcode,info):
     KPIdf = pd.DataFrame(columns=['KPI', 'value', 'comment'])
-    info = get_zip_data(zipcode)
-    Rentdf=get_rent(info)
     url=f'''https://datausa.io/profile/geo/{info.major_city.lower().replace(" ","-").replace("-national","")}-{info.state.lower()}'''
     response = requests.get(url)
     if response.status_code==200:
@@ -214,10 +213,12 @@ def get_data(zipcode):
                 KPIdf.loc[len(KPIdf)] = row_data
     KPIdf=get_old(KPIdf,info,zipcode)
 
+    return KPIdf
+def jd(info):
     url=f'''https://datausa.io/profile/geo/{info.major_city.lower().replace(" ","-").replace("-national","")}-{info.state.lower()}/economy/employment_by_industries?viz=true'''
     url1=f'''https://datausa.io/profile/geo/{info.major_city.lower().replace(" ","-").replace("-national","")}-{info.state.lower()}/education/degrees?viz=true'''
     if requests.get(url).status_code==200:
         jd=[url,url1]
     else:
         jd=False
-    return KPIdf,Rentdf,jd
+    return jd
