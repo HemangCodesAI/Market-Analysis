@@ -8,7 +8,7 @@ from datetime import datetime
 creds = service_account.Credentials.from_service_account_file('creds.json')
 service = build('sheets', 'v4', credentials=creds)
 sheet_id = '1Qw3auye81AFt9kezJNy22nLSMW_T240b4eDLbFUg46M'
-
+searche = SearchEngine(db_file_path='/tmp/simple_db.sqlite')
 def capture_data(row,service=service,sheet_id=sheet_id):
     sheet = service.spreadsheets()
     current_datetime=datetime.now()
@@ -50,7 +50,7 @@ def submit():
     zipcode = request.form.get('zipcode')
     user_data=[email,name,phone_number,zipcode]
     capture_data([user_data])
-    info=get_zip_data(zipcode)
+    info=get_zip_data(zipcode,searche)
     print("0")
     if zipcode and info:
         rents=get_rent(info)
