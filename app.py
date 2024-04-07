@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, make_response
-from fast_scraper import get_data, get_zip_data
+from fast_scraper import get_data, get_zip_data,get_rent,jd
 import pandas as pd
 from googleapiclient.discovery import build
 from google.oauth2 import service_account
