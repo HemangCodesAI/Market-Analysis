@@ -50,11 +50,17 @@ def submit():
     zipcode = request.form.get('zipcode')
     user_data=[email,name,phone_number,zipcode]
     capture_data([user_data])
-    if zipcode and get_zip_data(zipcode):
-        KPIs, rents ,jd= get_data(zipcode)
-        return render_template('1.html', result=True, zipcode=zipcode, KPIs=KPIs, rents=rents, jd=jd, Email=email, Name=name, phoneNumber=phone_number)
+    info=get_zip_data(zipcode)
+    print("0")
+    if zipcode and info:
+        rents=get_rent(info)
+        print("1")
+        jds=jd(info)
+        print("2")
+        KPIs= get_data(zipcode,info)
+        print("3")
+        return render_template('1.html', result=True, zipcode=zipcode, KPIs=KPIs, rents=rents, jd=jds, Email=email, Name=name, phoneNumber=phone_number)
     else:
         return "Please enter a valid zip code!", 400
-
 
 
