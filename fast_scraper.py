@@ -114,7 +114,6 @@ def get_old(KPIdf,info,zipcode):
     get_economy(info,zipcode,KPIdf)
     return KPIdf
 
-info = get_zip_data(zipcode,searche)
 def get_data(zipcode,info):
     KPIdf = pd.DataFrame(columns=['KPI', 'value', 'comment'])
     url=f'''https://datausa.io/profile/geo/{info.major_city.lower().replace(" ","-").replace("-national","")}-{info.state.lower()}'''
