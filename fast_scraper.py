@@ -7,8 +7,8 @@ from urllib.request import Request , urlopen
 import gzip
 import re
 
-searche = SearchEngine(db_file_path='/tmp/simple_db.sqlite')
-def get_zip_data(zipcode,search=searche):
+def get_zip_data(zipcode):
+    search = SearchEngine(db_file_path='/tmp/simple_db.sqlite')
     return search.by_zipcode(zipcode)
 
 def get_url(obj):
