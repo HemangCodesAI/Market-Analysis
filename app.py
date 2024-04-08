@@ -1,27 +1,6 @@
 from flask import Flask, render_template, request
-from fast_scraper import get_data, get_zip_data,get_rent,jd
+from api import get_data, get_zip_data,get_rent,jd,capture_data
 import pandas as pd
-from googleapiclient.discovery import build
-from google.oauth2 import service_account
-from datetime import datetime
-# Load Google Sheets credentials
-creds = service_account.Credentials.from_service_account_file('creds.json')
-service = build('sheets', 'v4', credentials=creds)
-sheet_id = '1Qw3auye81AFt9kezJNy22nLSMW_T240b4eDLbFUg46M'
-def capture_data(row,service=service,sheet_id=sheet_id):
-    sheet = service.spreadsheets()
-    current_datetime=datetime.now()
-    current_date = current_datetime.strftime('%Y-%m-%d')
-    current_time = current_datetime.strftime('%H:%M:%S')
-    row[0].append(current_date)
-    row[0].append(current_time)
-    sheet.values().append(
-    spreadsheetId=sheet_id,
-    range='Sheet1!A1',  # Update with your desired range
-    valueInputOption='RAW',
-    body={'values': row}
-    ).execute()
-    print("done")
 
 # capture_data([['Jhu', 'Doe', 'john.doe@example.com']])
 app = Flask(__name__)
