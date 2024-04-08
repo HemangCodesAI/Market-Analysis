@@ -35,7 +35,7 @@ def submit():
         print("1")
         jds=jd(info)
         print("2")
-        KPIs= get_data(zipcode,info,rents)
+        KPIs= get_data(info,rents)
         print("3")
         return render_template('1.html', result=True, zipcode=zipcode, KPIs=KPIs, rents=rents, jd=jds, Email=email, Name=name, phoneNumber=phone_number)
     else:
