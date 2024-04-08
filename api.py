@@ -151,6 +151,7 @@ def get_data(zipcode,info):
                     row_data=['Population Growth since 2000',f'-{div[0].text.split(" ")[0]}','Current population is '+divv[0].text]
                 else:
                     row_data=['Population Growth since 2000',f'{div[0].text.split(" ")[0]}','Current population is '+divv[0].text]
+                print(row_data)
                 KPIdf.loc[len(KPIdf)] = row_data
             except:
                 row_data=['Population Growth since 2000','No data found','No data found']
@@ -159,6 +160,7 @@ def get_data(zipcode,info):
             try:
                 div=soup.find_all("div", class_="Stat large-text")
                 row_data=["Poverty Rate",div[2].find("div", class_="stat-value").text,div[2].find("div", class_="stat-subtitle").text]
+                print(row_data)
                 KPIdf.loc[len(KPIdf)] = row_data
             except:
                 row_data=["Poverty Rate","No data found","No data found"]
@@ -166,6 +168,7 @@ def get_data(zipcode,info):
             # median household income
             try:
                 row_data=["Median Household Income",div[3].find("div", class_="stat-value").text,div[3].find("div", class_="stat-subtitle").text]
+                print(row_data)
                 KPIdf.loc[len(KPIdf)] = row_data
             except:
                 row_data=["Median Household Income","No data found","No data found"]
@@ -176,6 +179,7 @@ def get_data(zipcode,info):
                 old=int(info.median_household_income)
                 growth=((curr-old)/curr)*100
                 row_data=["Median Household Income Growth since 2000",f'{round(growth,2)}%',f'In year 2000 it was {old}']
+                print(row_data)
                 KPIdf.loc[len(KPIdf)] = row_data
             except:
                 row_data=["Median Household Income Growth since 2000","No data found","No data found"]
@@ -183,6 +187,7 @@ def get_data(zipcode,info):
             # median household value
             try:
                 row_data=["Median Household Value",div[4].find("div", class_="stat-value").text,div[4].find("div", class_="stat-subtitle").text]
+                print(row_data)
                 KPIdf.loc[len(KPIdf)] = row_data
             except:
                 row_data=["Median Household Value","No data found","No data found"]
@@ -193,6 +198,7 @@ def get_data(zipcode,info):
                 old=int(info.median_home_value)
                 growth=((curr-old)/curr)*100
                 row_data=["Median Household Value Growth since 2000",f'{round(growth,2)}%',f'In year 2000 it was {old}']
+                print(row_data)
                 KPIdf.loc[len(KPIdf)] = row_data
             except:
                 row_data=["Median Household Value Growth since 2000","No data found","No data found"]
@@ -203,9 +209,11 @@ def get_data(zipcode,info):
                 para=div[5].text.split(". ")
                 values_with_percentage = re.findall(r'\d+\.\d+%', para[2])
                 row_data=["Owner Occupied Housing Unit Rate",values_with_percentage[0],f"The national average is {values_with_percentage[1]}"]
+                print(row_data)
                 KPIdf.loc[len(KPIdf)] = row_data
             except:
                 row_data=["Owner Occupied Housing Unit Rate","No data found","No data found"]
+                print(row_data)
                 KPIdf.loc[len(KPIdf)] = row_data
             # median gross rent
             try:
@@ -213,6 +221,7 @@ def get_data(zipcode,info):
                 b = Rentdf['Min'].replace('[\$,]', '', regex=True).replace("/mo","",regex=True).astype(int)
                 gross_rent = (a.mean()+b.mean())/2
                 row_data=["Median Gross Rent",f"${round(gross_rent,2)}/mo",'Source: Apartments.com']
+                print(row_data)
                 KPIdf.loc[len(KPIdf)] = row_data
             except:
                 row_data=["Median Gross Rent","No data found",'No data found']
@@ -220,6 +229,7 @@ def get_data(zipcode,info):
             # median gross rent vs median hh income\
             try:
                 row_data=["Median Gross Rent vs. Median HH Income",f"${gross_rent}/${curr}",f"The income is {curr//gross_rent} times the rent"]
+                print(row_data)
                 KPIdf.loc[len(KPIdf)] = row_data
             except:
                 row_data=["Median Gross Rent vs. Median HH Income","No data found","No data found"]
@@ -228,6 +238,7 @@ def get_data(zipcode,info):
             try:
                 div=soup.find_all("div", class_="StatGroup single")
                 row_data=["Job Growth",div[8].find("div", class_="stat-value").text,div[8].find("div", class_="stat-title").text]
+                print(row_data)
                 KPIdf.loc[len(KPIdf)] = row_data
             except:
                 row_data=["Job Growth","No data found","No data found"]
