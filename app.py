@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, make_response
+from flask import Flask, render_template, request
 from fast_scraper import get_data, get_zip_data,get_rent,jd
 import pandas as pd
 from googleapiclient.discovery import build
@@ -56,7 +56,7 @@ def submit():
         print("1")
         jds=jd(info)
         print("2")
-        KPIs= get_data(zipcode,info)
+        KPIs= get_data(zipcode,info,rents)
         print("3")
         return render_template('1.html', result=True, zipcode=zipcode, KPIs=KPIs, rents=rents, jd=jds, Email=email, Name=name, phoneNumber=phone_number)
     else:
