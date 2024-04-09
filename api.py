@@ -45,8 +45,8 @@ def get_url(obj):
     }
     return "&".join([f"{key}={urllib.parse.quote_plus(str(value))}" for key, value in par.items()])
 
-def get_economy(zip_data,zipcode,KPIdf): # finalised
-    url=f'https://www.bestplaces.net/economy/zip-code/{zip_data.state.lower()}/{zip_data.major_city.lower()}/{zipcode}'
+def get_economy(zip_data,KPIdf): # finalised
+    url=f'https://www.bestplaces.net/economy/zip-code/{zip_data.state.lower()}/{zip_data.major_city.lower()}/{zip_data.zipcode}'
     response = requests.get(url)
     
     if response.status_code == 200:
@@ -59,8 +59,8 @@ def get_economy(zip_data,zipcode,KPIdf): # finalised
                     row_data=["Unemployment Rate [As of 2019]",p.text.split("  ")[0].split(" ")[-1],p.text.split("  ")[1]]
                     KPIdf.loc[len(KPIdf)] = row_data
 
-def get_crime(zip_data,zipcode, KPIdf): # finalised
-    url=f'https://www.bestplaces.net/crime/zip-code/{zip_data.state.lower()}/{zip_data.major_city.lower()}/{zipcode}'
+def get_crime(zip_data, KPIdf): # finalised
+    url=f'https://www.bestplaces.net/crime/zip-code/{zip_data.state.lower()}/{zip_data.major_city.lower()}/{zip_data.zipcode}'
     response = requests.get(url)
     try:
         if response.status_code == 200:
@@ -132,9 +132,9 @@ def get_rent(info): # finalised
     return pd.DataFrame(DATA,columns=["Bedrooms","Max","Min"])
 
 def get_old(KPIdf,info,zipcode):
-    get_crime(info,zipcode,KPIdf)
+    get_crime(info,KPIdf)
     get_score(info,KPIdf)
-    get_economy(info,zipcode,KPIdf)
+    get_economy(info,KPIdf)
     return KPIdf
 
 
@@ -246,6 +246,9 @@ def get_data(info,Rentdf):
         threads.append(threading.Thread(target=get_value_growth, args=(soup, KPIdf,info)))
         threads.append(threading.Thread(target=get_job_growth, args=(soup, KPIdf)))
         threads.append(threading.Thread(target=get_owner, args=(soup, KPIdf)))
+        threads.append(threading.Thread(target=get_crime, args=(info, KPIdf)))
+        threads.append(threading.Thread(target=get_score, args=(info, KPIdf)))
+        threads.append(threading.Thread(target=get_economy, args=(info, KPIdf)))
         for thread in threads:
             thread.start()
         for thread in threads:
