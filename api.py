@@ -143,13 +143,15 @@ def get_rent(info): # finalised
     # Group by "Bedrooms" and aggregate the "Max" and "Min" values
     grouped_df = df.groupby("Bedrooms").agg({"Max": lambda x: x.iloc[0], "Min": lambda x: x.iloc[1]})
     grouped_df = grouped_df.reset_index()
-    for index, row in grouped_df.iterrows():
-        max_value = int(row["Max"].split("/")[0].replace("$", "").replace(",", "").strip())
-        min_value = int(row["Min"].split("/")[0].replace("$", "").replace(",", "").strip())
-        if max_value < min_value:
-            # Swap the values
-            grouped_df.at[index, "Max"], grouped_df.at[index, "Min"] = row["Min"], row["Max"]
-    
+    try:
+        for index, row in grouped_df.iterrows():
+            max_value = int(row["Max"].split("/")[0].replace("$", "").replace(",", "").strip())
+            min_value = int(row["Min"].split("/")[0].replace("$", "").replace(",", "").strip())
+            if max_value < min_value:
+                # Swap the values
+                grouped_df.at[index, "Max"], grouped_df.at[index, "Min"] = row["Min"], row["Max"]
+    except:
+        pass
     return grouped_df
 
 def get_population_growth(soup, KPIdf):
