@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
-from api import get_data, get_zip_data,get_rent,jd,capture_data
+from api import get_data, get_zip_data,get_rent,capture_data
 import pandas as pd
-
+import requests
 # capture_data([['Jhu', 'Doe', 'john.doe@example.com']])
 app = Flask(__name__)
 
@@ -33,11 +33,16 @@ def submit():
     if zipcode and info:
         rents=get_rent(info)
         print("1")
-        jds=jd(info)
+        url=f'''https://datausa.io/profile/geo/{info.major_city.lower().replace(" ","-").replace("-national","")}-{info.state.lower()}/economy/employment_by_industries?viz=true'''
+        url1=f'''https://datausa.io/profile/geo/{info.major_city.lower().replace(" ","-").replace("-national","")}-{info.state.lower()}/education/degrees?viz=true'''
+        if requests.get(url).status_code==200:
+            jd=[url,url1]
+        else:
+            jd=False
         print("2")
         KPIs= get_data(info,rents)
         print("3")
-        return render_template('1.html', result=True, zipcode=zipcode, KPIs=KPIs, rents=rents, jd=jds, Email=email, Name=name, phoneNumber=phone_number)
+        return render_template('1.html', result=True, zipcode=zipcode, KPIs=KPIs, rents=rents, jd=jd, Email=email, Name=name, phoneNumber=phone_number)
     else:
         return "Please enter a valid zip code!", 400
 
