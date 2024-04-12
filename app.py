@@ -33,14 +33,14 @@ def submit():
     if zipcode and info:
         rents=get_rent(info)
         print("1")
+        KPIs= get_data(info,rents)
+        print("2")
         url=f'''https://datausa.io/profile/geo/{info.major_city.lower().replace(" ","-").replace("-national","")}-{info.state.lower()}/economy/employment_by_industries?viz=true'''
         url1=f'''https://datausa.io/profile/geo/{info.major_city.lower().replace(" ","-").replace("-national","")}-{info.state.lower()}/education/degrees?viz=true'''
         if requests.get(url).status_code==200:
             jd=[url,url1]
         else:
             jd=False
-        print("2")
-        KPIs= get_data(info,rents)
         print("3")
         return render_template('1.html', result=True, zipcode=zipcode, KPIs=KPIs, rents=rents, jd=jd, Email=email, Name=name, phoneNumber=phone_number)
     else:
