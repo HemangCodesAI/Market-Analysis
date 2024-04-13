@@ -14,6 +14,9 @@ erent = pd.DataFrame( columns = ['Type', 'min', 'max'])
 erent['Type'] = c
 erent['min'] = ['']*5
 erent['max'] = ['']*5
+info=[]
+zipcode=''
+KPIs,jd,email,name,phone_number='',[],'','',''
 @app.route('/', methods=['GET'])
 def index():
     
@@ -26,8 +29,8 @@ def submit():
     name = request.form.get('Name')
     phone_number = request.form.get('phoneNumber')
     zipcode = request.form.get('zipcode')
-    # user_data=[email,name,phone_number,zipcode]
-    # capture_data([user_data])
+    user_data=[email,name,phone_number,zipcode]
+    capture_data([user_data])
     info=get_zip_data(zipcode)
     print("0")
     if zipcode and info:
@@ -46,4 +49,7 @@ def submit():
     else:
         return "Please enter a valid zip code!", 400
 
-
+@app.route('/more_info',methods=['POST'])
+def more_info():
+    rents=get_rent(info)
+    return render_template('1.html', result=True, zipcode=zipcode, KPIs=KPIs, rents=rents, jd=jd, Email=email, Name=name, phoneNumber=phone_number)

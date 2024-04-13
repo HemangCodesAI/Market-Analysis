@@ -362,22 +362,10 @@ window.addEventListener("load", () => {
                     <div class="card-header" style="background-color: #023453; color: white">
                       Max & Min Possible rent per month (<a href="https://www.apartments.com/" target="_blank">Source</a>)
                     </div>
-                    <table border="1">
-                      <tr>
-                        <th>Type</th>
-                        <th>Maximum</th>
-                        <th>Minimum</th>
-                      </tr>
-                      {% for row in rents.iterrows() %}
-                          <tr>
-                              {% for value in row[1] %}
-                                  <td>{{ value }}</td>
-                              {% endfor %}
-                          </tr>
-                      {% endfor %}
-                  </table>
-                  </div>
-                </div>
+                    <form action ="/more_info" method="post">
+                      <button class="btn btn-cta" style="margin-left: 10px; margin-top: 15px;">Get rent info</button>
+                    </form>
+                    
                 {% else %}
                 <div style="display: inline-block; width:100% ;">
                   <div class="card" id="output" style="margin-bottom: 25px">
@@ -401,6 +389,25 @@ window.addEventListener("load", () => {
                   </div>
                 </div>
                 {% endif %}
+                {% if more_info %}
+                <table border="1">
+                  <tr>
+                    <th>Type</th>
+                    <th>Maximum</th>
+                    <th>Minimum</th>
+                  </tr>
+                  {% for row in rents.iterrows() %}
+                      <tr>
+                          {% for value in row[1] %}
+                              <td>{{ value }}</td>
+                          {% endfor %}
+                      </tr>
+                  {% endfor %}
+              </table>
+              </div>
+            </div>
+            {% endif %}
+
                 {% if result and jd %}
                  
                 {% endif %}
