@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request,session
+from flask import Flask, render_template, request
 from api import get_data, get_zip_data,get_rent,capture_data
 import pandas as pd
 import requests
@@ -15,8 +15,8 @@ erent = pd.DataFrame( columns = ['Type', 'min', 'max'])
 erent['Type'] = c
 erent['min'] = ['']*5
 erent['max'] = ['']*5
-info=[]
-zipcode=''
+info=None
+zipcode=None
 KPIs,jd,email,name,phone_number='',[],'','',''
 @app.route('/', methods=['GET'])
 def index():
@@ -26,6 +26,7 @@ def index():
 
 @app.route('/submit', methods=['POST'])
 def submit():
+    global KPIs, zipcode, jd ,info,email,name,phone_number
     email = request.form.get('Email')
     name = request.form.get('Name')
     phone_number = request.form.get('phoneNumber')
@@ -46,13 +47,6 @@ def submit():
         else:
             jd=False
         print("3")
-        session['email'] = email
-        session['name'] = name
-        session['phone_number'] = phone_number
-        session['zipcode'] = zipcode
-        session['KPIs'] = KPIs
-        session['jd'] = jd
-        session['info'] = info
 
         return render_template('1.html', result=True, zipcode=zipcode, KPIs=KPIs, rents=erent, jd=jd, Email=email, Name=name, phoneNumber=phone_number)
     else:
@@ -60,12 +54,7 @@ def submit():
 
 @app.route('/more_info',methods=['POST'])
 def more_info():
-    email = session.get('email')
-    name = session.get('name')
-    phone_number = session.get('phone_number')
-    jd = session.get('jd')
-    KPIs = session.get('KPIs')
-    zipcode = session.get('zipcode')
-    info = session.get('info')
+    
+    global KPIs, zipcode, jd ,info,email,name,phone_number
     rents=get_rent(info)
     return render_template('1.html',more_info=True, result=True, zipcode=zipcode, KPIs=KPIs, rents=rents, jd=jd, Email=email, Name=name, phoneNumber=phone_number)
