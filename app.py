@@ -17,7 +17,7 @@ erent['min'] = ['']*5
 erent['max'] = ['']*5
 info=None
 zipcode=None
-KPIs,jd,email,name,phone_number='',[],'','',''
+KPIs,jd,email,name,phone_number=None,[],'','',''
 @app.route('/', methods=['GET'])
 def index():
     
