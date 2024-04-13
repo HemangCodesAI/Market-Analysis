@@ -4,6 +4,7 @@ import pandas as pd
 import requests
 # capture_data([['Jhu', 'Doe', 'john.doe@example.com']])
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'your_secret_key_here'
 a=['Population Growth since 2000','Poverty Rate','College Graduates','Crime Index','Median Household Income','Median Household Income Growth since 2000','Landlord Friendly','Median Household Value','Median Household Value Growth since 2000','Owner Occupied Housing Unit Rate','Median Gross Rent','Median Gross Rent vs. Median HH Income','Max Possible Rent','Liveability Score','Vacancy Rate','Job Growth','Unemployment Rate'] 
 ekpi = pd.DataFrame( columns = ['KPI', 'Value', 'Comment'])
 ekpi['KPI'] = a
