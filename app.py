@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request,session
 from api import get_data, get_zip_data,get_rent,capture_data
 import pandas as pd
 import requests
@@ -45,11 +45,26 @@ def submit():
         else:
             jd=False
         print("3")
+        session['email'] = email
+        session['name'] = name
+        session['phone_number'] = phone_number
+        session['zipcode'] = zipcode
+        session['KPIs'] = KPIs
+        session['jd'] = jd
+        session['info'] = info
+
         return render_template('1.html', result=True, zipcode=zipcode, KPIs=KPIs, rents=erent, jd=jd, Email=email, Name=name, phoneNumber=phone_number)
     else:
         return "Please enter a valid zip code!", 400
 
 @app.route('/more_info',methods=['POST'])
 def more_info():
+    email = session.get('email')
+    name = session.get('name')
+    phone_number = session.get('phone_number')
+    jd = session.get('jd')
+    KPIs = session.get('KPIs')
+    zipcode = session.get('zipcode')
+    info = session.get('info')
     rents=get_rent(info)
-    return render_template('1.html', result=True, zipcode=zipcode, KPIs=KPIs, rents=rents, jd=jd, Email=email, Name=name, phoneNumber=phone_number)
+    return render_template('1.html',more_info=True, result=True, zipcode=zipcode, KPIs=KPIs, rents=rents, jd=jd, Email=email, Name=name, phoneNumber=phone_number)
