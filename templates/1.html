@@ -357,7 +357,7 @@ window.addEventListener("load", () => {
                 {% endif %}
                 </div>
               </div>
-              {% if result %}
+              {% if result and not more_info %}
                 <div style="display: inline-block; width: 100%;">
                   <div class="card" id="output" style="margin-bottom: 25px">
                     <div class="card-header" style="background-color: #023453; color: white">
@@ -368,8 +368,9 @@ window.addEventListener("load", () => {
                     </form>
                   </div>
                 </div>
-                    
-                {% else %}
+                                    
+                {% endif %}
+                {% if more_info and result %}
                 <div style="display: inline-block; width:100% ;">
                   <div class="card" id="output" style="margin-bottom: 25px">
                     <div class="card-header" style="background-color: #023453; color: white">
@@ -381,7 +382,7 @@ window.addEventListener("load", () => {
                         <th>Maximum</th>
                         <th>Minimum</th>
                       </tr>
-                      {% for row in erent.iterrows() %}
+                      {% for row in rents.iterrows() %}
                           <tr>
                               {% for value in row[1] %}
                                   <td>{{ value }}</td>
@@ -391,24 +392,6 @@ window.addEventListener("load", () => {
                   </table>
                   </div>
                 </div>
-                {% endif %}
-                {% if more_info %}
-                <table border="1">
-                  <tr>
-                    <th>Type</th>
-                    <th>Maximum</th>
-                    <th>Minimum</th>
-                  </tr>
-                  {% for row in rents.iterrows() %}
-                      <tr>
-                          {% for value in row[1] %}
-                              <td>{{ value }}</td>
-                          {% endfor %}
-                      </tr>
-                  {% endfor %}
-              </table>
-              </div>
-            </div>
             {% endif %}
 
                 {% if result and jd %}
