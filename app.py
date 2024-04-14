@@ -40,6 +40,7 @@ def submit():
         # rents=get_rent(info)
         print("1")
         KPIs=get_data(info)
+        KPIs.reset_index(drop=True, inplace=True)
         session['df_json']=KPIs.to_json()
         print("2")
         url=f'''https://datausa.io/profile/geo/{info.major_city.lower().replace(" ","-").replace("-national","")}-{info.state.lower()}/economy/employment_by_industries?viz=true'''
