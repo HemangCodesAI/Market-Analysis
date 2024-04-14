@@ -67,5 +67,6 @@ def more_info():
     df_json = session.get('df_json')
     if df_json:
         KPIs = pd.read_json(df_json)
-    rents=get_rent(info)
-    return render_template('1.html',more_info=True, result=True, zipcode=zipcode, KPIs=KPIs, rents=rents, jd=jd, Email=email, Name=name, phoneNumber=phone_number)
+    print("1")
+    # rents=get_rent(info)
+    return render_template('1.html',more_info=True, result=True, zipcode=zipcode, KPIs=KPIs, rents=erent, jd=jd, Email=email, Name=name, phoneNumber=phone_number)
