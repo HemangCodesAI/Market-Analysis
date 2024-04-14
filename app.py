@@ -26,8 +26,8 @@ def index():
     # return render_template('1.html', result=False)
 
 @app.route('/submit', methods=['POST'])
-def submit(KPIs=KPIs):
-    global zipcode, jd ,info,email,name,phone_number
+def submit():
+    global KPIs,zipcode, jd ,info,email,name,phone_number
     email = request.form.get('Email')
     name = request.form.get('Name')
     phone_number = request.form.get('phoneNumber')
