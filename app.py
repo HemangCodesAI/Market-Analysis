@@ -26,8 +26,8 @@ def index():
     # return render_template('1.html', result=False)
 
 @app.route('/submit', methods=['POST'])
-def submit():
-    global KPIs,zipcode, jd ,info,email,name,phone_number
+def submit(KPIs=KPIs):
+    global zipcode, jd ,info,email,name,phone_number
     email = request.form.get('Email')
     name = request.form.get('Name')
     phone_number = request.form.get('phoneNumber')
@@ -39,7 +39,7 @@ def submit():
     if zipcode and info:
         # rents=get_rent(info)
         print("1")
-        get_data(info,erent)
+        get_data(info,KPIs)
         print("2")
         url=f'''https://datausa.io/profile/geo/{info.major_city.lower().replace(" ","-").replace("-national","")}-{info.state.lower()}/economy/employment_by_industries?viz=true'''
         url1=f'''https://datausa.io/profile/geo/{info.major_city.lower().replace(" ","-").replace("-national","")}-{info.state.lower()}/education/degrees?viz=true'''
