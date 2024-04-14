@@ -23,7 +23,6 @@ def index():
 
 @app.route('/submit', methods=['POST'])
 def submit():
-    global zipcode, jd ,info,email,name,phone_number
     email = request.form.get('Email')
     name = request.form.get('Name')
     phone_number = request.form.get('phoneNumber')
@@ -36,7 +35,6 @@ def submit():
     user_data=[email,name,phone_number,zipcode]
     capture_data([user_data])
     info=get_zip_data(zipcode)
-    session['info']=info
     print("0")
     if zipcode and info:
         # rents=get_rent(info)
@@ -63,7 +61,7 @@ def more_info():
     name = session.get('name')
     phone_number = session.get('phone_number')
     zipcode = session.get('zipcode')
-    info=session.get('info')
+    info=get_zip_data(zipcode)
     jd=[session.get('url'),session.get('url1')]
     KPIs=pd.read_csv("temp/data.csv")
     rents=get_rent(info)
