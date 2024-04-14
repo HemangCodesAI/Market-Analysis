@@ -39,7 +39,7 @@ def submit(KPIs=KPIs):
     if zipcode and info:
         # rents=get_rent(info)
         print("1")
-        KPIs= get_data(info,erent)
+        get_data(info,erent)
         print("2")
         url=f'''https://datausa.io/profile/geo/{info.major_city.lower().replace(" ","-").replace("-national","")}-{info.state.lower()}/economy/employment_by_industries?viz=true'''
         url1=f'''https://datausa.io/profile/geo/{info.major_city.lower().replace(" ","-").replace("-national","")}-{info.state.lower()}/education/degrees?viz=true'''

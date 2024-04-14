@@ -289,7 +289,7 @@ def get_data(info,KPIdf):
         #     row_data=["Median Gross Rent vs. Median HH Income","No data found","No data found"]
         #     KPIdf.loc[len(KPIdf)] = row_data
     # KPIdf = get_old(KPIdf, info, zipcode)
-    return KPIdf
+    
 
 
 def jd(info):
