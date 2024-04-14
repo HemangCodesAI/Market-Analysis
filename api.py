@@ -244,8 +244,8 @@ def get_owner(soup,KPIdf):
         print(row_data)
         KPIdf.loc[len(KPIdf)] = row_data
 
-def get_data(info,KPIdf):
-    
+def get_data(info):
+    KPIdf = pd.DataFrame(columns=['KPI', 'value', 'comment'])
     url = f'''https://datausa.io/profile/geo/{info.major_city.lower().replace(" ", "-").replace("-national", "")}-{info.state.lower()}'''
     response = requests.get(url)
     if response.status_code == 200:
@@ -289,7 +289,8 @@ def get_data(info,KPIdf):
         #     row_data=["Median Gross Rent vs. Median HH Income","No data found","No data found"]
         #     KPIdf.loc[len(KPIdf)] = row_data
     # KPIdf = get_old(KPIdf, info, zipcode)
-    
+    KPIdf.to_csv("temp/data.csv", index=False)
+    return KPIdf
 
 
 def jd(info):
