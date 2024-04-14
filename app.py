@@ -40,6 +40,7 @@ def submit():
         # rents=get_rent(info)
         print("1")
         KPIs=get_data(info)
+        session['df_json']=KPIs.to_json()
         print("2")
         url=f'''https://datausa.io/profile/geo/{info.major_city.lower().replace(" ","-").replace("-national","")}-{info.state.lower()}/economy/employment_by_industries?viz=true'''
         url1=f'''https://datausa.io/profile/geo/{info.major_city.lower().replace(" ","-").replace("-national","")}-{info.state.lower()}/education/degrees?viz=true'''
@@ -63,6 +64,8 @@ def more_info():
     zipcode = session.get('zipcode')
     info=get_zip_data(zipcode)
     jd=[session.get('url'),session.get('url1')]
-    KPIs=pd.read_csv("temp/data.csv")
+    df_json = session.get('df_json')
+    if df_json:
+        KPIs = pd.read_json(df_json)
     rents=get_rent(info)
     return render_template('1.html',more_info=True, result=True, zipcode=zipcode, KPIs=KPIs, rents=rents, jd=jd, Email=email, Name=name, phoneNumber=phone_number)

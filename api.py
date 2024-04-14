@@ -289,7 +289,6 @@ def get_data(info):
         #     row_data=["Median Gross Rent vs. Median HH Income","No data found","No data found"]
         #     KPIdf.loc[len(KPIdf)] = row_data
     # KPIdf = get_old(KPIdf, info, zipcode)
-    KPIdf.to_csv("temp/data.csv", index=False)
     return KPIdf
 
 
