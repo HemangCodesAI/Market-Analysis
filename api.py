@@ -29,7 +29,6 @@ def capture_data(row,service=service,sheet_id=sheet_id):
     ).execute()
     print("done")
 
-
 def get_zip_data(zipcode):
     search = SearchEngine(db_file_path='/tmp/simple_db.sqlite')
     return search.by_zipcode(zipcode)
@@ -245,8 +244,8 @@ def get_owner(soup,KPIdf):
         print(row_data)
         KPIdf.loc[len(KPIdf)] = row_data
 
-def get_data(info,Rentdf):
-    KPIdf = pd.DataFrame(columns=['KPI', 'value', 'comment'])
+def get_data(info,KPIdf):
+    
     url = f'''https://datausa.io/profile/geo/{info.major_city.lower().replace(" ", "-").replace("-national", "")}-{info.state.lower()}'''
     response = requests.get(url)
     if response.status_code == 200:
@@ -269,26 +268,26 @@ def get_data(info,Rentdf):
             thread.start()
         for thread in threads:
             thread.join()
-        try:
-            a = Rentdf['Max'].replace('[\$,]', '', regex=True).replace("/mo","",regex=True).astype(int)
-            b = Rentdf['Min'].replace('[\$,]', '', regex=True).replace("/mo","",regex=True).astype(int)
-            gross_rent = (a.mean()+b.mean())/2
-            row_data=["Median Gross Rent",f"${round(gross_rent,2)}/mo",'Source: Apartments.com']
-            # print(row_data)
-            KPIdf.loc[len(KPIdf)] = row_data
-        except:
-            row_data=["Median Gross Rent","No data found",'No data found']
-            KPIdf.loc[len(KPIdf)] = row_data
-        # median gross rent vs median hh income\
-        try:
-            div=soup.find_all("div", class_="Stat large-text")
-            curr=int(div[4].find("div", class_="stat-value").text.replace("$","").replace(",",""))
-            row_data=["Median Gross Rent vs. Median HH Income",f"${gross_rent}/${curr}",f"The income is {curr//gross_rent} times the rent"]
-            # print(row_data)
-            KPIdf.loc[len(KPIdf)] = row_data
-        except:
-            row_data=["Median Gross Rent vs. Median HH Income","No data found","No data found"]
-            KPIdf.loc[len(KPIdf)] = row_data
+        # try:
+        #     a = Rentdf['Max'].replace('[\$,]', '', regex=True).replace("/mo","",regex=True).astype(int)
+        #     b = Rentdf['Min'].replace('[\$,]', '', regex=True).replace("/mo","",regex=True).astype(int)
+        #     gross_rent = (a.mean()+b.mean())/2
+        #     row_data=["Median Gross Rent",f"${round(gross_rent,2)}/mo",'Source: Apartments.com']
+        #     # print(row_data)
+        #     KPIdf.loc[len(KPIdf)] = row_data
+        # except:
+        #     row_data=["Median Gross Rent","No data found",'No data found']
+        #     KPIdf.loc[len(KPIdf)] = row_data
+        # # median gross rent vs median hh income\
+        # try:
+        #     div=soup.find_all("div", class_="Stat large-text")
+        #     curr=int(div[4].find("div", class_="stat-value").text.replace("$","").replace(",",""))
+        #     row_data=["Median Gross Rent vs. Median HH Income",f"${gross_rent}/${curr}",f"The income is {curr//gross_rent} times the rent"]
+        #     # print(row_data)
+        #     KPIdf.loc[len(KPIdf)] = row_data
+        # except:
+        #     row_data=["Median Gross Rent vs. Median HH Income","No data found","No data found"]
+        #     KPIdf.loc[len(KPIdf)] = row_data
     # KPIdf = get_old(KPIdf, info, zipcode)
     return KPIdf
 

@@ -17,7 +17,8 @@ erent['min'] = ['']*5
 erent['max'] = ['']*5
 info=None
 zipcode=None
-KPIs,jd,email,name,phone_number=None,[],'','',''
+KPIs=KPIdf = pd.DataFrame(columns=['KPI', 'value', 'comment'])
+jd,email,name,phone_number=[],'','',''
 @app.route('/', methods=['GET'])
 def index():
     
@@ -25,8 +26,8 @@ def index():
     # return render_template('1.html', result=False)
 
 @app.route('/submit', methods=['POST'])
-def submit():
-    global KPIs, zipcode, jd ,info,email,name,phone_number
+def submit(KPIs=KPIs):
+    global zipcode, jd ,info,email,name,phone_number
     email = request.form.get('Email')
     name = request.form.get('Name')
     phone_number = request.form.get('phoneNumber')
@@ -53,8 +54,8 @@ def submit():
         return "Please enter a valid zip code!", 400
 
 @app.route('/more_info',methods=['POST'])
-def more_info():
+def more_info(KPIs=KPIs):
     
-    global KPIs, zipcode, jd ,info,email,name,phone_number
+    global zipcode, jd ,info,email,name,phone_number
     rents=get_rent(info)
     return render_template('1.html',more_info=True, result=True, zipcode=zipcode, KPIs=KPIs, rents=rents, jd=jd, Email=email, Name=name, phoneNumber=phone_number)
