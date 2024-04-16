@@ -97,7 +97,7 @@ def get_score(zip_data, KPIdf): # finalised
         KPIdf.loc[len(KPIdf)] = row_data
 
 def get_rent_data(bed_fil, sort, info, DATA):
-    row_data=[bed_fil,'','']
+    row_data=[bed_fil,'No data found','No data found']
     url = f'https://www.apartments.com/{info.major_city.lower().replace(" ", "-")}-{info.state.lower()}-{info.zipcode}/{bed_fil}/?so={sort}'
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36', "Upgrade-Insecure-Requests": "1", "DNT": "1", "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "Accept-Language": "en-US,en;q=0.5", "Accept-Encoding": "gzip, deflate"}
     response = Request(url, headers=headers)
@@ -114,30 +114,20 @@ def get_rent_data(bed_fil, sort, info, DATA):
         row_data[1]=max_rent
         
     elif div and sort=="2":
-        # max_rent = div.text
-        # max_rent='' 
         min_rent = div.text
         row_data[2]=min_rent
     elif soup.find("p", class_="bed-price-range") and sort=='1':
         div = soup.find("p", class_="bed-price-range")
         max_rent = div.find("span", class_="property-rents").text
         row_data[1]=max_rent
-        # min_rent = div.find("span", class_="property-rents").text
-        # min_rent=''
     elif div and sort=="2":
-        # max_rent = div.text
-        # max_rent=''
         min_rent = div.text
         row_data[2]=min_rent
     elif soup.find("p", class_="bed-price-range") and sort=='2':
         div = soup.find("p", class_="bed-price-range")
         max_rent = div.find("span", class_="property-rents").text
         row_data[1]=max_rent
-        # min_rent = div.find("span", class_="property-rents").text
-        # min_rent=''
-    # else:
-    #     max_rent = "No data found"
-    #     min_rent = "No data found"
+        
     DATA.append(row_data)
 
 def get_rent(info,bed_fil): # finalised
