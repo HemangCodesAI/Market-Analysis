@@ -97,60 +97,64 @@ def get_score(zip_data, KPIdf): # finalised
         KPIdf.loc[len(KPIdf)] = row_data
 
 def get_rent_data(bed_fil, sort, info, DATA):
-    try:
-        url = f'https://www.apartments.com/{info.major_city.lower().replace(" ", "-")}-{info.state.lower()}-{info.zipcode}/{bed_fil[0]}/?so={sort}'
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36', "Upgrade-Insecure-Requests": "1", "DNT": "1", "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "Accept-Language": "en-US,en;q=0.5", "Accept-Encoding": "gzip, deflate"}
-        response = Request(url, headers=headers)
-        response1 = urlopen(response)
-        if response1.info().get('Content-Encoding') == 'gzip':
-            data = gzip.decompress(response1.read())
-        else:
-            data = response1.read()
-        result = data.decode('utf-8')
-        soup = BeautifulSoup(result, "html.parser")
-        div = soup.find("div", class_="price-range")
-        if div:
-            max_rent = div.text
-            min_rent = div.text
-        elif soup.find("p", class_="bed-price-range"):
-            div = soup.find("p", class_="bed-price-range")
-            max_rent = div.find("span", class_="property-rents").text
-            min_rent = div.find("span", class_="property-rents").text
-        else:
-            max_rent = "No data found"
-            min_rent = "No data found"
-        DATA.append([bed_fil[1], max_rent, min_rent])
-    except Exception as e:
-        DATA.append([bed_fil[1], "No data found", "No data found"])
+    row_data=[bed_fil,'','']
+    url = f'https://www.apartments.com/{info.major_city.lower().replace(" ", "-")}-{info.state.lower()}-{info.zipcode}/{bed_fil}/?so={sort}'
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36', "Upgrade-Insecure-Requests": "1", "DNT": "1", "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "Accept-Language": "en-US,en;q=0.5", "Accept-Encoding": "gzip, deflate"}
+    response = Request(url, headers=headers)
+    response1 = urlopen(response)
+    if response1.info().get('Content-Encoding') == 'gzip':
+        data = gzip.decompress(response1.read())
+    else:
+        data = response1.read()
+    result = data.decode('utf-8')
+    soup = BeautifulSoup(result, "html.parser")
+    div = soup.find("div", class_="price-range")
+    if div and sort=="1":
+        max_rent = div.text 
+        row_data[1]=max_rent
+        
+    elif div and sort=="2":
+        # max_rent = div.text
+        # max_rent='' 
+        min_rent = div.text
+        row_data[2]=min_rent
+    elif soup.find("p", class_="bed-price-range") and sort=='1':
+        div = soup.find("p", class_="bed-price-range")
+        max_rent = div.find("span", class_="property-rents").text
+        row_data[1]=max_rent
+        # min_rent = div.find("span", class_="property-rents").text
+        # min_rent=''
+    elif div and sort=="2":
+        # max_rent = div.text
+        # max_rent=''
+        min_rent = div.text
+        row_data[2]=min_rent
+    elif soup.find("p", class_="bed-price-range") and sort=='2':
+        div = soup.find("p", class_="bed-price-range")
+        max_rent = div.find("span", class_="property-rents").text
+        row_data[1]=max_rent
+        # min_rent = div.find("span", class_="property-rents").text
+        # min_rent=''
+    # else:
+    #     max_rent = "No data found"
+    #     min_rent = "No data found"
+    DATA.append(row_data)
 
-def get_rent(info): # finalised
-    bed_fils = [["studios","Studio"],["1-bedrooms","1-BD"],["2-bedrooms","2-BD"], ["3-bedrooms","3-BD"], ["4-bedrooms","4-BD"]]    
-    sorts = ["1", "2"]
+def get_rent(info,bed_fil): # finalised
+    # bed_fils = ["studios","Studio"],["1-bedrooms","1-BD"],["2-bedrooms","2-BD"], ["3-bedrooms","3-BD"], ["4-bedrooms","4-BD"]]    
+    sorts = ["1","2"]
     DATA = []
-
-    threads = []
-    for bed_fil in bed_fils:
-        for sort in sorts:
-            thread = threading.Thread(target=get_rent_data, args=(bed_fil, sort, info, DATA))
-            threads.append(thread)
+    threads=[]
+    for sort in sorts:
+        # get_rent_data(bed_fil,sort,info,DATA) 
+        threads.append(threading.Thread(target=get_rent_data, args=(bed_fil,sort,info,DATA)))  
+    for thread in threads:
             thread.start()
-
     for thread in threads:
         thread.join()
     df = pd.DataFrame(DATA, columns=["Bedrooms", "Max", "Min"])
-    # print(df)
-    # Group by "Bedrooms" and aggregate the "Max" and "Min" values
     grouped_df = df.groupby("Bedrooms").agg({"Max": lambda x: x.iloc[0], "Min": lambda x: x.iloc[1]})
-    grouped_df = grouped_df.reset_index()
-    try:
-        for index, row in grouped_df.iterrows():
-            max_value = int(row["Max"].split("/")[0].replace("$", "").replace(",", "").strip())
-            min_value = int(row["Min"].split("/")[0].replace("$", "").replace(",", "").strip())
-            if max_value < min_value:
-                # Swap the values
-                grouped_df.at[index, "Max"], grouped_df.at[index, "Min"] = row["Min"], row["Max"]
-    except:
-        pass
+    grouped_df = grouped_df.reset_index()   
     return grouped_df
 
 def get_population_growth(soup, KPIdf):
@@ -199,7 +203,7 @@ def get_hhi_increase(soup,KPIdf,info):
     except:
         row_data=["Median Household Income Growth since 2000","No data found","No data found"]
         KPIdf.loc[len(KPIdf)] = row_data
-# Define similar functions for other data points
+
 def get_household_value(soup,KPIdf):
     div=soup.find_all("div", class_="Stat large-text")
     try:
@@ -292,11 +296,3 @@ def get_data(info):
     return KPIdf
 
 
-def jd(info):
-    url=f'''https://datausa.io/profile/geo/{info.major_city.lower().replace(" ","-").replace("-national","")}-{info.state.lower()}/economy/employment_by_industries?viz=true'''
-    url1=f'''https://datausa.io/profile/geo/{info.major_city.lower().replace(" ","-").replace("-national","")}-{info.state.lower()}/education/degrees?viz=true'''
-    if requests.get(url).status_code==200:
-        jd=[url,url1]
-    else:
-        jd=False
-    return jd

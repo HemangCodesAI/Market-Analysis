@@ -59,6 +59,7 @@ def submit():
 
 @app.route('/more_info',methods=['POST'])
 def more_info():
+    
     email = session.get('email')
     name = session.get('name')
     phone_number = session.get('phone_number')
@@ -66,8 +67,12 @@ def more_info():
     info=get_zip_data(zipcode)
     jd=[session.get('url'),session.get('url1')]
     df_json = session.get('df_json')
+    bed_fil = request.form.get('selected_option')
+    print(bed_fil)
     if df_json:
         KPIs = pd.read_json(df_json)
-    print("1")
-    # rents=get_rent(info)
-    return render_template('1.html',more_info=True, result=True, zipcode=zipcode, KPIs=KPIs, rents=erent, jd=jd, Email=email, Name=name, phoneNumber=phone_number)
+    # print("1")
+    rents=get_rent(info,bed_fil)
+    return render_template('1.html',more_info=True, result=True, zipcode=zipcode, KPIs=KPIs, rents=rents, jd=jd, Email=email, Name=name, phoneNumber=phone_number)
+# if __name__ == '__main__':
+#     app.run(debug=True)
