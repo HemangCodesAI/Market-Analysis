@@ -27,13 +27,11 @@ def submit():
     name = request.form.get('Name')
     phone_number = request.form.get('phoneNumber')
     zipcode = request.form.get('zipcode')
-    bed_fil=request.form.get("selected_option")
     user_data=[email,name,phone_number,zipcode]
+    session['zipcode']=zipcode
     capture_data([user_data])
-    info=get_zip_data(zipcode)
     print("0")
     if zipcode and info:
-        rents=get_rent(info,bed_fil)
         print("1")
         KPIs=get_data(info)
         print("2")
@@ -45,9 +43,17 @@ def submit():
             jd=False
         print("3")
 
-        return render_template('1.html', result=True, zipcode=zipcode, KPIs=KPIs, rents=rents, jd=jd, Email=email, Name=name, phoneNumber=phone_number)
+        return render_template('1.html', result=True, zipcode=zipcode, KPIs=KPIs, rents=erent, jd=jd, Email=email, Name=name, phoneNumber=phone_number)
     else:
         return "Please enter a valid zip code!", 400
+
+
+@app.route('/rent', methods=['POST'])
+def rent():
+    info=get_zip_data(session.get('zipcode'))
+    bed_fil=request.form.get("selected_option")
+    rents=get_rent(info,bed_fil)
+    return render_template('1.html', result2=True, result=True, zipcode=session.get('zipcode'), KPIs=ekpi, rents=rents)
 
 # if __name__=="__main__":
 #     app.run(debug=True)

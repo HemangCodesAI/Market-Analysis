@@ -280,13 +280,3 @@ def get_data(info):
         #     KPIdf.loc[len(KPIdf)] = row_data
     # KPIdf = get_old(KPIdf, info, zipcode)
     return KPIdf
-
-
-def jd(info):
-    url=f'''https://datausa.io/profile/geo/{info.major_city.lower().replace(" ","-").replace("-national","")}-{info.state.lower()}/economy/employment_by_industries?viz=true'''
-    url1=f'''https://datausa.io/profile/geo/{info.major_city.lower().replace(" ","-").replace("-national","")}-{info.state.lower()}/education/degrees?viz=true'''
-    if requests.get(url).status_code==200:
-        jd=[url,url1]
-    else:
-        jd=False
-    return jd
