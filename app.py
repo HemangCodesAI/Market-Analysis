@@ -33,7 +33,7 @@ def submit():
     info=get_zip_data(zipcode)
     print("0")
     if zipcode and info:
-        # rents=get_rent(info)
+        rents=get_rent(info,bed_fil)
         print("1")
         KPIs=get_data(info)
         print("2")
