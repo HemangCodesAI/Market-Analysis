@@ -307,57 +307,58 @@ window.addEventListener("load", () => {
                       Please enter a valid email address.
                     </div>
                   </div>
-                  <div class="mb-3">
-                    <label for="name" class="form-label"><strong>Name <span style="color: red">*</span></strong></label>
-                    <input type="text" class="form-control" id="name" placeholder="Enter your Name" required=""
-                    name="Name" value="{{ Name }}">
-                    <div id="nameError" class="invalid-feedback">
-                      Please enter your name.
-                    </div>
-                  </div>
-                  <div class="mb-3">
-                    <label for="phone" class="form-label"><strong>Phone <span style="color: red">*</span></strong></label>
-                    <input type="text" class="form-control" id="phoneNumber" placeholder="Enter your Phone Number" required="" oninput="preprocessPhoneNumber(this)"
-                    name="phoneNumber" value="{{ phoneNumber }}">
-                    <div id="phoneError" class="invalid-feedback">
-                      Please enter a valid phone number.
-                    </div>
-                  </div> 
-                </div>
-                <div class="card-header" style="background-color: #023453; color: white">
-                  Zip Code for Market Analysis
-                </div>
-                <div class="card-body">
-                    <div class="mb-3">
-                      <label for="zipCode" class="form-label"><strong>Zip code <span style="color: red">*</span></strong></label>
-                      <input type="text" class="form-control" id="zipcode" placeholder="Enter Zip code" required=""
-                      name="zipcode" value="{{ zipcode }}">
-                      <div class="invalid-feedback">
-                        Please enter valid Zip Code.
+                      <div class="mb-3">
+                        <label for="name" class="form-label"><strong>Name <span style="color: red">*</span></strong></label>
+                        <input type="text" class="form-control" id="name" placeholder="Enter your Name" required=""
+                        name="Name" value="{{ Name }}">
+                        <div id="nameError" class="invalid-feedback">
+                          Please enter your name.
+                        </div>
                       </div>
+                      <div class="mb-3">
+                        <label for="phone" class="form-label"><strong>Phone <span style="color: red">*</span></strong></label>
+                        <input type="text" class="form-control" id="phoneNumber" placeholder="Enter your Phone Number" required="" oninput="preprocessPhoneNumber(this)"
+                        name="phoneNumber" value="{{ phoneNumber }}">
+                        <div id="phoneError" class="invalid-feedback">
+                          Please enter a valid phone number.
+                        </div>
+                      </div> 
+                </div>
+                    <div class="card-header" style="background-color: #023453; color: white">
+                      Zip Code for Market Analysis
                     </div>
-                </div>
-                
-                <div style="display: inline-block; margin-bottom: 15px;" >
-                  <button type="submit" class="btn btn-cta" style="margin-left: 10px;" >
-                    Submit
-                  </button>
-                </form>
-                {% if result %}
-                <form action="/" method="get">
-                  <button type="submit" class="btn btn-cta" style="margin-left: 10px; margin-top: 15px;">
-                    Clear
-                  </button>
-                </form>
-                  <div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                          <label for="zipCode" class="form-label"><strong>Zip code <span style="color: red">*</span></strong></label>
+                          <input type="text" class="form-control" id="zipcode" placeholder="Enter Zip code" required=""
+                          name="zipcode" value="{{ zipcode }}">
+                          <div class="invalid-feedback">
+                            Please enter valid Zip Code.
+                          </div>
+                        </div>
+                    </div>
                     
-                        <button class='btn btn-cta' style="margin-left: 10px; margin-top: 15px;" onclick="getPdf(); return false;" >
-                    Download as PDF</button>
-                    
-                </div>
-                {% endif %}
-                </div>
-              </div>
+                    <div style="display: inline-block; margin-bottom: 15px;" >
+                      <button type="submit" class="btn btn-cta" style="margin-left: 10px;" >
+                        Submit
+                      </button>
+                    </div>
+                </form>
+                    {% if result %}
+                    <form action="/" method="get">
+                      <button type="submit" class="btn btn-cta" style="margin-left: 10px; margin-top: 15px;">
+                        Clear
+                      </button>
+                </form>
+                      <div>
+                        
+                            <button class='btn btn-cta' style="margin-left: 10px; margin-top: 15px;" onclick="getPdf(); return false;" >
+                        Download as PDF</button>
+                        
+                    </div>
+                    {% endif %}
+            </div>
+          </div>
                 
           <div class="col-md-4" style="width: 66.66%;">
             {% if result %}
@@ -380,26 +381,26 @@ window.addEventListener("load", () => {
                   {% endfor %}
               </table> 
               </div>
-          {% else %}
-            <div class="card" style="margin-bottom: 25px">
-              <div class="card-header" style="background-color: #023453; color: white">
-                KPI fields
+            {% else %}
+              <div class="card" style="margin-bottom: 25px">
+                <div class="card-header" style="background-color: #023453; color: white">
+                  KPI fields
+                </div>
+                <table border="1">
+                  <tr>
+                      <th>KPI Name</th>
+                      <th>Value</th>
+                      <th>Comparison with State</th>
+                  </tr>
+                  {% for row in ekpi.iterrows() %}
+                      <tr>
+                          {% for value in row[1] %}
+                              <td>{{ value }}</td>
+                          {% endfor %}
+                      </tr>
+                  {% endfor %}
+                </table> 
               </div>
-              <table border="1">
-                <tr>
-                    <th>KPI Name</th>
-                    <th>Value</th>
-                    <th>Comparison with State</th>
-                </tr>
-                {% for row in ekpi.iterrows() %}
-                    <tr>
-                        {% for value in row[1] %}
-                            <td>{{ value }}</td>
-                        {% endfor %}
-                    </tr>
-                {% endfor %}
-            </table> 
-            </div>
             {% endif %}
             {% if result and jd %}
             <div class="card" style="margin-bottom: 25px">
