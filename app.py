@@ -27,7 +27,7 @@ def submit():
     name = request.form.get('Name')
     phone_number = request.form.get('phoneNumber')
     zipcode = request.form.get('zipcode')
-    bed_fil = request.form.get('selected_option')
+    # bed_fil = request.form.get('selected_option')
     user_data=[email,name,phone_number,zipcode]
     capture_data([user_data])
     info=get_zip_data(zipcode)
@@ -43,7 +43,7 @@ def submit():
         else:
             jd=False
         print("3")
-        rents=get_rent(info,bed_fil)
+        rents=get_rent(info,bed_fil='studios')
         return render_template('1.html', result=True, zipcode=zipcode, KPIs=KPIs, rents=rents, jd=jd, Email=email, Name=name, phoneNumber=phone_number)
     else:
         return "Please enter a valid zip code!", 400
