@@ -207,7 +207,7 @@ def get_value_growth(soup,KPIdf,info):
         old=int(info.median_home_value)
         growth=((curr-old)/curr)*100
         row_data=["Median Household Value Growth since 2000",f'{round(growth,2)}%',f'In year 2000 it was {old}']
-        print(row_data)
+        # print(row_data)
         KPIdf.loc[len(KPIdf)] = row_data
     except:
         row_data=["Median Household Value Growth since 2000","No data found","No data found"]

@@ -45,7 +45,9 @@ def submit():
             jd=False
         print("3")
 
-        return render_template('1.html', result=True, zipcode=zipcode, KPIs=KPIs, rents=erent, jd=jd, Email=email, Name=name, phoneNumber=phone_number)
+        return render_template('1.html', result=True, zipcode=zipcode, KPIs=KPIs, rents=rents, jd=jd, Email=email, Name=name, phoneNumber=phone_number)
     else:
         return "Please enter a valid zip code!", 400
 
+# if __name__=="__main__":
+#     app.run(debug=True)
