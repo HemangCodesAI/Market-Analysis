@@ -27,6 +27,7 @@ def submit():
     name = request.form.get('Name')
     phone_number = request.form.get('phoneNumber')
     zipcode = request.form.get('zipcode')
+    info=get_zip_data(zipcode)
     user_data=[email,name,phone_number,zipcode]
     session['zipcode']=zipcode
     capture_data([user_data])
