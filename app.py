@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request 
+from flask import Flask, render_template, request ,session
 from api import get_data, get_zip_data,get_rent,capture_data
 import pandas as pd
 import requests
@@ -27,33 +27,47 @@ def submit():
     name = request.form.get('Name')
     phone_number = request.form.get('phoneNumber')
     zipcode = request.form.get('zipcode')
-    # bed_fil = request.form.get('selected_option')
+    session['email'] = email
+    session['name'] = name
+    session['phone_number'] = phone_number
+    session['zipcode'] = zipcode
+
     user_data=[email,name,phone_number,zipcode]
     capture_data([user_data])
     info=get_zip_data(zipcode)
     print("0")
     if zipcode and info:
+        # rents=get_rent(info)
         print("1")
         KPIs=get_data(info)
+        KPIs.reset_index(drop=True, inplace=True)
+        session['df_json']=KPIs.to_json()
         print("2")
         url=f'''https://datausa.io/profile/geo/{info.major_city.lower().replace(" ","-").replace("-national","")}-{info.state.lower()}/economy/employment_by_industries?viz=true'''
         url1=f'''https://datausa.io/profile/geo/{info.major_city.lower().replace(" ","-").replace("-national","")}-{info.state.lower()}/education/degrees?viz=true'''
         if requests.get(url).status_code==200:
             jd=[url,url1]
+            session['url']=url
+            session['url1']=url1
         else:
             jd=False
         print("3")
-        rents=get_rent(info,bed_fil='studios')
-        return render_template('1.html', result=True, zipcode=zipcode, KPIs=KPIs, rents=rents, jd=jd, Email=email, Name=name, phoneNumber=phone_number)
+
+        return render_template('1.html', result=True, zipcode=zipcode, KPIs=KPIs, rents=erent, jd=jd, Email=email, Name=name, phoneNumber=phone_number)
     else:
         return "Please enter a valid zip code!", 400
 
-# @app.route('/more_info',methods=['POST'])
-# def more_info():
-#     user_data = session.get('user_data')
-#     info=get_zip_data(user_data[3])
-#     bed_fil = request.form.get('selected_option')
-#     rents=get_rent(info,bed_fil)
-#     return render_template('1.html',more_info=True, result=True, zipcode=user_data[3], KPIs=pd.read_json(session.get('df_json')), rents=rents, jd=user_data[6], Email=user_data[0], Name=user_data[1], phoneNumber=user_data[2])
-if __name__ == '__main__':
-    app.run(debug=False,host='0.0.0.0')
+@app.route('/more_info',methods=['POST'])
+def more_info():
+    email = session.get('email')
+    name = session.get('name')
+    phone_number = session.get('phone_number')
+    zipcode = session.get('zipcode')
+    info=get_zip_data(zipcode)
+    jd=[session.get('url'),session.get('url1')]
+    df_json = session.get('df_json')
+    if df_json:
+        KPIs = pd.read_json(df_json)
+    print("1")
+    # rents=get_rent(info)
+    return render_template('1.html',more_info=True, result=True, zipcode=zipcode, KPIs=KPIs, rents=erent, jd=jd, Email=email, Name=name, phoneNumber=phone_number)
