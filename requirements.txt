@@ -4,3 +4,4 @@ bs4
 uszipcode
 google-api-python-client
 python-Levenshtein
+Gunicorn
