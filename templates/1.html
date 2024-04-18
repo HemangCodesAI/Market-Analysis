@@ -337,6 +337,14 @@ window.addEventListener("load", () => {
                       </div>
                     </div>
                 </div>
+                <label for="options">Choose an option:</label>
+                <select id="options" name="selected_option">
+                  <option value="1-bedrooms">1 Bedrooms</option>
+                  <option value="2-bedrooms">2 Bedrooms</option>
+                  <option value="3-bedrooms">3 Bedrooms</option>
+                  <option value="4-bedrooms">4 Bedrooms</option>
+                  <option value="studios">Studio</option>
+                </select>
                 <div style="display: inline-block; margin-bottom: 15px;" >
                   <button type="submit" class="btn btn-cta" style="margin-left: 10px;" >
                     Submit
@@ -357,44 +365,12 @@ window.addEventListener("load", () => {
                 {% endif %}
                 </div>
               </div>
-              {% if result and not more_info %}
-                <div style="display: inline-block; width: 100%;">
-                  <div class="card" id="output" style="margin-bottom: 25px">
-                    <div class="card-header" style="background-color: #023453; color: white">
-                      Max & Min Possible rent per month (<a href="https://www.apartments.com/" target="_blank">Source</a>)
-                    </div>
-                    <form action ="/more_info" method="post">
-                      <label for="options">Choose an option:</label>
-                      <select id="options" name="selected_option">
-                        <option value="1-bedrooms">1 Bedrooms</option>
-                        <option value="2-bedrooms">2 Bedrooms</option>
-                        <option value="3-bedrooms">3 Bedrooms</option>
-                        <option value="4-bedrooms">4 Bedrooms</option>
-                        <option value="studios">Studio</option>
-                      </select>
-                      <button class="btn btn-cta" style="margin-left: 10px; margin-top: 15px;">Get rent info</button>
-                    </form>
-                  </div>
-                </div>
-                                    
-                {% endif %}
-                {% if more_info and result %}
+                {% if result %}
                 <div style="display: inline-block; width:100% ;">
                   <div class="card" id="output" style="margin-bottom: 25px">
                     <div class="card-header" style="background-color: #023453; color: white">
                       Max & Min Possible rent per month
                     </div>
-                    <form action ="/more_info" method="post">
-                      <label for="options">Choose an option:</label>
-                      <select id="options" name="selected_option">
-                        <option value="1-bedrooms">1 Bedrooms</option>
-                        <option value="2-bedrooms">2 Bedrooms</option>
-                        <option value="3-bedrooms">3 Bedrooms</option>
-                        <option value="4-bedrooms">4 Bedrooms</option>
-                        <option value="studios">Studio</option>
-                      </select>
-                      <button class="btn btn-cta" style="margin-left: 10px; margin-top: 15px;">Get rent info</button>
-                    </form>
                     <br>
                     <table border="1">
                       <tr>
@@ -414,9 +390,6 @@ window.addEventListener("load", () => {
                 </div>
             {% endif %}
 
-                {% if result and jd %}
-                 
-                {% endif %}
           </div>
           <div class="col-md-4" style="width: 66.66%;">
             {% if result %}
