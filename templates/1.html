@@ -384,6 +384,18 @@ window.addEventListener("load", () => {
                     <div class="card-header" style="background-color: #023453; color: white">
                       Max & Min Possible rent per month
                     </div>
+                    <form action ="/more_info" method="post">
+                      <label for="options">Choose an option:</label>
+                      <select id="options" name="selected_option">
+                        <option value="1-bedrooms">1 Bedrooms</option>
+                        <option value="2-bedrooms">2 Bedrooms</option>
+                        <option value="3-bedrooms">3 Bedrooms</option>
+                        <option value="4-bedrooms">4 Bedrooms</option>
+                        <option value="studios">Studio</option>
+                      </select>
+                      <button class="btn btn-cta" style="margin-left: 10px; margin-top: 15px;">Get rent info</button>
+                    </form>
+                    <br>
                     <table border="1">
                       <tr>
                         <th>Type</th>
