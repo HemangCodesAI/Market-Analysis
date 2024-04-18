@@ -53,8 +53,8 @@ def submit():
 def rent():
     info=get_zip_data(session.get('zipcode'))
     bed_fil=request.form.get("selected_option")
-    rents=get_rent(info,bed_fil)
-    return render_template('1.html', result2=True, result=True, zipcode=session.get('zipcode'), KPIs=ekpi, rents=rents)
+    # rents=get_rent(info,bed_fil)
+    return render_template('1.html', result2=True, result=True, zipcode=session.get('zipcode'), KPIs=ekpi, rents=erent)
 
 # if __name__=="__main__":
 #     app.run(debug=True)
