@@ -128,20 +128,38 @@ def get_rent_data(bed_fil, sort, info, DATA):
         row_data[1]=max_rent
     DATA.append(row_data)
 
-def get_rent(info,bed_fil): # finalised
-    sorts = ["1","2"]
-    DATA = []
-    threads=[]
-    for sort in sorts:
-        threads.append(threading.Thread(target=get_rent_data, args=(bed_fil,sort,info,DATA)))  
-    for thread in threads:
-            thread.start()
-    for thread in threads:
-        thread.join()
-    df = pd.DataFrame(DATA, columns=["Bedrooms", "Max", "Min"])
-    grouped_df = df.groupby("Bedrooms").agg({"Max": lambda x: x.iloc[0], "Min": lambda x: x.iloc[1]})
-    grouped_df = grouped_df.reset_index()   
-    return grouped_df
+def get_rent(info): # finalised
+    # sorts = ["1","2"]
+    # DATA = []
+    # threads=[]
+    # for sort in sorts:
+    #     threads.append(threading.Thread(target=get_rent_data, args=(bed_fil,sort,info,DATA)))  
+    # for thread in threads:
+    #         thread.start()
+    # for thread in threads:
+    #     thread.join()
+    # df = pd.DataFrame(DATA, columns=["Bedrooms", "Max", "Min"])
+    # grouped_df = df.groupby("Bedrooms").agg({"Max": lambda x: x.iloc[0], "Min": lambda x: x.iloc[1]})
+    # grouped_df = grouped_df.reset_index()   
+    
+
+    # new site
+
+    url=f'https://www.apartmenthomeliving.com/{info.post_office_city.lower().replace(", ","-").replace(" ","-")}/zip-code/{info.zipcode}-apartments'
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36', "Upgrade-Insecure-Requests": "1", "DNT": "1", "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "Accept-Language": "en-US,en;q=0.5", "Accept-Encoding": "gzip, deflate"}
+    response = Request(url, headers=headers)
+    response1 = urlopen(response)
+    if response1.info().get('Content-Encoding') == 'gzip':
+        data = gzip.decompress(response1.read())
+    else:
+        data = response1.read()
+    result = data.decode('utf-8')
+    soup = BeautifulSoup(result, "html.parser")
+    tabels=soup.find_all('table',class_='price_chart')
+    # tabels
+    df=pd.read_html(str(tabels))
+    
+    return df[0]
 
 def get_population_growth(soup, KPIdf):
     div = soup.find_all("div", class_="stat-subtitle")
